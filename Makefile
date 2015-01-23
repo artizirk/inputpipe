@@ -12,7 +12,7 @@ SERVER_OBJS = $(COMMON_OBJS) \
 CLIENT_OBJS = $(COMMON_OBJS) \
 	src/client.o
 
-CFLAGS = -I uinput -I src -g
+CFLAGS = -I src -g
 
 all: $(BINS)
 

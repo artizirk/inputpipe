@@ -41,7 +41,7 @@
 #include <getopt.h>
 #include <signal.h>
 
-#include <input.h>
+#include <linux/input.h>
 #include "inputpipe.h"
 #include "packet.h"
 
@@ -396,14 +396,16 @@ static int evdev_send_event(struct evdev *self, struct server *svr)
 
   compute_grab(self, &ev);
 
-  if (grab_devices && !(ev.type == EV_KEY && ev.code == MAGIC_GRAB_KEY)) {
+  if (!(ev.type == EV_KEY && ev.code == MAGIC_GRAB_KEY)) {
 	  /* Translate and send this event. If it's an event we think should
 	   * only be sent from app to device, assume it's an echo from
 	   * a write and discard it.
 	   */
+	   
 	  hton_input_event(&ip_ev, &ev);
 	  if (is_output_event(&ev))
 		return 0;
+
 	  packet_socket_write(svr->socket, IPIPE_EVENT, sizeof(ip_ev), &ip_ev);
 
 	  /* Does this device support synchronization events?

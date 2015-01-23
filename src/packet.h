@@ -26,7 +26,7 @@
 
 #include <stdio.h>
 
-#include <input.h>
+#include <linux/input.h>
 #include "inputpipe.h"
 
 struct packet_socket {
