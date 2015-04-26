@@ -29,7 +29,11 @@
 #include <getopt.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <sys/fcntl.h>
+#ifdef __GLIBC__
+	#include <sys/fcntl.h>
+#else
+	#include <fcntl.h>
+#endif
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <sys/select.h>

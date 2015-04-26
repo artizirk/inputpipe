@@ -1,13 +1,10 @@
+include config.mk
+
 BINS = inputpipe-server inputpipe-client
-
-INSTALL = install
-DESTDIR = /usr/local/bin
-
 COMMON_OBJS = src/packet.o
 SERVER_OBJS = $(COMMON_OBJS) src/server.o
 CLIENT_OBJS = $(COMMON_OBJS) src/client.o
-
-CFLAGS = -I src -g
+INSTALL = install
 
 all: $(BINS)
 
@@ -23,3 +20,9 @@ inputpipe-client: $(CLIENT_OBJS)
 
 clean:
 	rm -f $(BINS) $(SERVER_OBJS) $(CLIENT_OBJS)
+
+distclean: clean
+	rm -rf kernel-headers
+
+getheaders:
+	git clone --depth=1 git://github.com/sabotage-linux/kernel-headers
