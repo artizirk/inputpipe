@@ -1,24 +1,19 @@
 BINS = inputpipe-server inputpipe-client
 
 INSTALL = install
-INSTDIR = /usr/local/bin
+DESTDIR = /usr/local/bin
 
-COMMON_OBJS = \
-	src/packet.o
-
-SERVER_OBJS = $(COMMON_OBJS) \
-	src/server.o
-
-CLIENT_OBJS = $(COMMON_OBJS) \
-	src/client.o
+COMMON_OBJS = src/packet.o
+SERVER_OBJS = $(COMMON_OBJS) src/server.o
+CLIENT_OBJS = $(COMMON_OBJS) src/client.o
 
 CFLAGS = -I src -g
 
 all: $(BINS)
 
 install: $(BINS)
-	$(INSTALL) inputpipe-server $(INSTDIR)/inputpipe-server
-	$(INSTALL) inputpipe-client $(INSTDIR)/inputpipe-client
+	$(INSTALL) inputpipe-server $(DESTDIR)/inputpipe-server
+	$(INSTALL) inputpipe-client $(DESTDIR)/inputpipe-client
 
 inputpipe-server: $(SERVER_OBJS)
 	$(CC) -o $@ $(SERVER_OBJS) $(LDFLAGS)
