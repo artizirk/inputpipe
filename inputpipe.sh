@@ -1,11 +1,16 @@
-#!/bin/sh
+#!/bin/bash
+
 
 if [ -z $1 ]; then
-	HOST=kloug
+	echo "Usage $0: [ssh hostname/ip to connect]"
 else
 	HOST=$1
 fi
 
-ssh $HOST pkill inputpipe
-ssh -f -L 7192:localhost:7192 $HOST "/home/gab/bin/inputpipe-server -a 127.0.0.1" && inputpipe-client -a localhost
+REMOTE_INPUTPIPE_CLIENT="/usr/local/bin/inputpipe-client"
+LOCAL_INPUTPIPE_SERVER="/usr/local/bin/inputpipe-server"
+
+ssh -f -R 7192:localhost:7192 ${HOST} "${REMOTE_INPUTPIPE_CLIENT} -k 127.0.0.1"
+${LOCAL_INPUTPIPE_SERVER}
+ssh $HOST pkill inputpipe-client
 
