@@ -22,10 +22,6 @@ Inputpipe is licensed under the GNU GPL.
 Contents
 --------
 
-conf:
-  Sample config files. Currently this contains an example of running
-  inputpipe-server via xinetd.
-
 src:
   Source for inputpipe-server and inputpipe-client
 
@@ -50,8 +46,7 @@ IMPORTANT: inputpipe-server on its own has no security features. It is
            that may be used to enter passwords.
 
 That said, you can get started just by running "inputpipe-server" with
-no arguments. For more advanced usage, see the --help text and the sample
-xinetd.conf provided in the 'conf' directory.
+no arguments. For more advanced usage, see the --help text
 
 
 Client setup
