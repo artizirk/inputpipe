@@ -19,8 +19,7 @@ Inputpipe is licensed under the GNU GPL.
 
 ## Contents
 
-### src:
-  Source for inputpipe-server and inputpipe-client
+_src/_: Source for inputpipe-server and inputpipe-client
 
 
 ## Server setup
@@ -31,15 +30,16 @@ The inputpipe server is the machine you wish forwarded input devices
 to appear on. It uses the "uinput" kernel module to create the forwarded
 input devices- therefore it requires Linux 2.6.x.
 
-IMPORTANT: inputpipe-server on its own has no security features. It is
-           intended mainly for use on closed networks. If you require
-           a little extra security you can run inputpipe-server in inetd
-           mode and use wrappers or inetd features to accept only certain
-           connections.
+_IMPORTANT_:
+inputpipe-server on its own has no security features. It is
+intended mainly for use on closed networks. If you require
+a little extra security you can run inputpipe-server in inetd
+mode and use wrappers or inetd features to accept only certain
+connections.
 
-           Even if you authenticate connections to inputpipe, note that
-           the data will not be encrypted! Don't use inputpipe for devices
-           that may be used to enter passwords.
+Even if you authenticate connections to inputpipe, note that
+the data will not be encrypted! Don't use inputpipe for devices
+that may be used to enter passwords.
 
 That said, you can get started just by running "inputpipe-server" with
 no arguments. For more advanced usage, see the --help text
