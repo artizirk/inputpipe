@@ -36,9 +36,11 @@
 #include <sys/time.h>
 #include <sys/select.h>
 #include <linux/tcp.h>
+#include <unistd.h>
+#include <stdlib.h>
 
-#include <input.h>
-#include <uinput.h>
+#include <linux/input.h>
+#include <linux/uinput.h>
 #include "inputpipe.h"
 #include "packet.h"
 

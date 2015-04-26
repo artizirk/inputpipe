@@ -33,6 +33,7 @@
 #include <sys/select.h>
 #include <linux/tcp.h>
 #include <errno.h>
+#include <unistd.h>
 
 #include "packet.h"
 

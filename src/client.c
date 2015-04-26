@@ -41,8 +41,9 @@
 #include <getopt.h>
 #include <signal.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-#include <input.h>
+#include <linux/input.h>
 #include "inputpipe.h"
 #include "packet.h"
 
