@@ -47,6 +47,10 @@
 #include "inputpipe.h"
 #include "packet.h"
 
+#ifndef __GLIBC__
+	#define PATH_MAX 4096
+#endif
+
 #define test_bit(nr, addr) \
         (((1UL << ((nr) & 31)) & (((const unsigned int *) addr)[(nr) >> 5])) != 0)
 
