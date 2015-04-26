@@ -1,11 +1,9 @@
-===========
- Inputpipe
-===========
-Version 0.5
+# Inputpipe
+
+### Version 0.5
 
 
-Introduction
-------------
+## Introduction
 
 Inputpipe is a client/server application for making any Linux input
 device network-transparent. An inputpipe client runs on a computer with
@@ -14,25 +12,23 @@ those devices to an inputpipe server. The server creates local input
 devices that are for all practical purposes identical copies of the
 devices being forwarded.
 
-Build with "make", install with "make install". Nothing fancy there.
+Configure in `config.mk`, build with `make`, install with `make install`. Nothing fancy there.
 
 Inputpipe is licensed under the GNU GPL.
 
 
-Contents
---------
+## Contents
 
-src:
+### src:
   Source for inputpipe-server and inputpipe-client
 
 
-Server setup
-------------
+## Server setup
 
 (Requires Linux 2.6 or later and the 'uinput' kernel module)
 
 The inputpipe server is the machine you wish forwarded input devices
-to appear on. It uses the 'uinput' kernel module to create the forwarded
+to appear on. It uses the "uinput" kernel module to create the forwarded
 input devices- therefore it requires Linux 2.6.x.
 
 IMPORTANT: inputpipe-server on its own has no security features. It is
@@ -49,8 +45,7 @@ That said, you can get started just by running "inputpipe-server" with
 no arguments. For more advanced usage, see the --help text
 
 
-Client setup
-------------
+## Client setup
 
 (Requires Linux 2.4 or later and the 'evdev' kernel module)
 
@@ -71,15 +66,15 @@ quick examples:
 
 1. Forwarding a single event device to the host "warzok":
 
- inputpipe-client warzok /dev/input/event5
+ `inputpipe-client warzok /dev/input/event5`
 
 2. Forwarding all joystick devices to warzok:
 
- inputpipe-client -j warzok
+ `inputpipe-client -j warzok`
 
 3. Forwarding all mice plus a single known input device to warzok:
 
- inputpipe-client -m warzok /dev/input/event3
+ `inputpipe-client -m warzok /dev/input/event3`
 
 Note that in example 1, inputpipe-client will exit if the device is removed
 or warzok goes down. In the other examples, inputpipe-client will keep scanning
@@ -88,20 +83,21 @@ alive when inputpipe-client first connects, it can go down and come back up
 without killing inputpipe-client - the client will retry failed connections.
 
 
-Internals
----------
+## Internals
 
 Inputpipe uses a simple but extensible binary protocol over TCP. Most input
 traffic consists of thinly encapsulated and network-byte-order-adjusted
 input_event structures, but inputpipe defines numerous other packet types
 used for communicating a device's identity and capabilities. For full details
-on the protocol, see src/inputpipe.h
+on the protocol, see `src/inputpipe.h`
 
 
-Contacts
-------
+## Compiling with musl
+
+Run `make getheaders` and edit `config.mk` accordingly. `musl-gcc` wrapper
+or gcc built with musl is required
+
+## Contacts
 
 Micah Dowty <micah@navi.cx>
 Mark Vainomaa <mikroskeem@mikroskeem.eu>
-
---- The End ---
