@@ -99,5 +99,5 @@ or gcc built with musl is required
 
 ## Contacts
 
-Micah Dowty <micah@navi.cx>
-Mark Vainomaa <mikroskeem@mikroskeem.eu>
+* Micah Dowty <micah@navi.cx>
+* Mark Vainomaa <mikroskeem@mikroskeem.eu>
