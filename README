@@ -26,12 +26,6 @@ conf:
   Sample config files. Currently this contains an example of running
   inputpipe-server via xinetd.
 
-uinput:
-  A modified version of the uinput driver that supports force feedback
-  and includes some small bugfixes. This has been submitted upstream
-  so hopefully you should see it in a stable kernel soon.
-  This is not required.
-
 src:
   Source for inputpipe-server and inputpipe-client
 
