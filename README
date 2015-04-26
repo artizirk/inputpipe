@@ -90,7 +90,7 @@ Note that in example 1, inputpipe-client will exit if the device is removed
 or warzok goes down. In the other examples, inputpipe-client will keep scanning
 for new hotplugged devices. Also note that as long as the inputpipe server is
 alive when inputpipe-client first connects, it can go down and come back up
-without killing inputpipe-client- the client will retry failed connections.
+without killing inputpipe-client - the client will retry failed connections.
 
 
 Internals
@@ -107,8 +107,6 @@ Contacts
 ------
 
 Micah Dowty <micah@navi.cx>
-
-The latest code is in a Subversion repository at:
-  http://navi.cx/svn/misc/trunk/inputpipe/
+Mark Vainomaa <mikroskeem@mikroskeem.eu>
 
 --- The End ---
