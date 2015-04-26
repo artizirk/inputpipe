@@ -369,7 +369,7 @@ static int compute_grab(struct evdev *self, struct input_event *ev)
 		grab_devices = !grab_devices;
 
 		for (cur = connection_list_head; cur; cur = cur->next)
-			ioctl(cur->evdev.fd, EVIOCGRAB, (void *)grab_devices);
+			ioctl(cur->evdev.fd, EVIOCGRAB, grab_devices);
 	}
 }
 
