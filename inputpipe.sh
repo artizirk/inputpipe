@@ -3,6 +3,7 @@
 
 if [ -z $1 ]; then
 	echo "Usage $0: [ssh hostname/ip to connect]"
+	exit 1
 else
 	HOST=$1
 fi
