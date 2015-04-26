@@ -1,2 +1,4 @@
 *.o
 *~
+inputpipe-server
+inputpipe-client
