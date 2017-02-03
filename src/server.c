@@ -380,6 +380,7 @@ static void client_received_packet(struct client* self,
       case EV_LED: ioc = UI_SET_LEDBIT; break;
       case EV_SND: ioc = UI_SET_SNDBIT; break;
       case EV_FF:  ioc = UI_SET_FFBIT;  break;
+      case EV_SW:  ioc = UI_SET_SWBIT; break;
       default:
 	ioc = 0;
       }
