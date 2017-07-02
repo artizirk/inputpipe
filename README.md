@@ -16,6 +16,11 @@ Configure in `config.mk`, build with `make`, install with `make install`. Nothin
 
 Inputpipe is licensed under the GNU GPL.
 
+## Note
+inputpipe doesn't seem to work with newer Linux kernels and/or devices.  
+Atleast SteelSeries Rival 300 & Cooler Master QuickFire Rapid-I didn't forward under kernel 4.11.5 and I ended up using __usbip__, which works fairly better and is able to forward more than just HID devices over network.
+
+So I recommend __usbip__ to you all as well :)
 
 ## Contents
 
