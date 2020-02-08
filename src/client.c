@@ -85,10 +85,6 @@ struct connection {
 static struct connection *connection_list_head = NULL;
 static struct connection *connection_list_tail = NULL;
 
-
-#define MAGIC_GRAB_KEY 0x8a
-static int grab_devices = 0;
-
 /* Configuration, set via the command line */
 static int config_verbose = 1;
 static char *config_host_and_port = NULL;
@@ -249,8 +245,6 @@ static int evdev_init(struct evdev *self, const char *path)
 
 static void evdev_close(struct evdev *self)
 {
-  if (grab_devices)
-    ioctl(self->fd, EVIOCGRAB, (void *)0);
   close(self->fd);
   if (self->path) {
     free(self->path);
@@ -368,19 +362,6 @@ static int evdev_send_metadata(struct evdev *self, struct server *svr)
   return 0;
 }
 
-
-static int compute_grab(struct evdev *self, struct input_event *ev)
-{
-	if (ev->type == EV_KEY && ev->code == MAGIC_GRAB_KEY && ev->value == 1) {
-		struct connection *cur;
-
-		grab_devices = !grab_devices;
-
-		for (cur = connection_list_head; cur; cur = cur->next)
-			ioctl(cur->evdev.fd, EVIOCGRAB, grab_devices);
-	}
-}
-
 /* Read the next event from the event device and send to the server. */
 static int evdev_send_event(struct evdev *self, struct server *svr)
 {
@@ -404,28 +385,24 @@ static int evdev_send_event(struct evdev *self, struct server *svr)
     return 0;
   }
 
-  compute_grab(self, &ev);
+  /* Translate and send this event. If it's an event we think should
+   * only be sent from app to device, assume it's an echo from
+   * a write and discard it.
+   */
+  hton_input_event(&ip_ev, &ev);
+  if (is_output_event(&ev))
+    return 0;
+  packet_socket_write(svr->socket, IPIPE_EVENT, sizeof(ip_ev), &ip_ev);
 
-  if (grab_devices && !(ev.type == EV_KEY && ev.code == MAGIC_GRAB_KEY)) {
-	  /* Translate and send this event. If it's an event we think should
-	   * only be sent from app to device, assume it's an echo from
-	   * a write and discard it.
-	   */
-	  hton_input_event(&ip_ev, &ev);
-	  if (is_output_event(&ev))
-		return 0;
-	  packet_socket_write(svr->socket, IPIPE_EVENT, sizeof(ip_ev), &ip_ev);
-
-	  /* Does this device support synchronization events?
-	   * If so, we flush only after we get one of those.
-	   */
-	  if (test_bit(EV_SYN, self->evbits)) {
-		if (ev.type == EV_SYN)
-			packet_socket_flush(svr->socket);
-	  }
-	  else {
-		packet_socket_flush(svr->socket);
-	  }
+  /* Does this device support synchronization events?
+   * If so, we flush only after we get one of those.
+   */
+  if (test_bit(EV_SYN, self->evbits)) {
+    if (ev.type == EV_SYN)
+      packet_socket_flush(svr->socket);
+  }
+  else {
+    packet_socket_flush(svr->socket);
   }
 
   return 0;
@@ -721,10 +698,11 @@ static int event_loop(void) {
     connection_list_add_fds(&fd_max, &fd_read);
 
     n = select(fd_max, &fd_read, NULL, NULL, &remaining);
-    if (n < 0) {
-		perror("select");
-		exit(1);
-    }  else if (n == 0) {
+    if (n<0) {
+      perror("select");
+      exit(1);
+    }
+    else if (n == 0) {
       /* Remaining time expired, poll for new devices.
        * This also polls implicitly for disconnections,
        * when we do connection_list_poll()
