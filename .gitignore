@@ -3,3 +3,5 @@
 inputpipe-server
 inputpipe-client
 kernel-headers
+*.orig
+tags
